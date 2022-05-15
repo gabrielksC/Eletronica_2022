@@ -1,1 +1,0 @@
-# Eletronica_2022
