@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="19c91941-fc79-418c-b681-118e48d856be" name="Changes" comment="Gas tank">
+      <change afterPath="$PROJECT_DIR$/Codes/MicroPython/blink.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Eletronica_2022.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Eletronica_2022.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ATAS/Anotações da Reunião 06.05.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CADS/Chassi/Chassi.ipt" beforeDir="false" afterPath="$PROJECT_DIR$/CADS/Chassi/Chassi.ipt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CADS/Gas Tank.STEP" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MicroPythonDevices" devicePath="COM3" autoDetectDevicePath="false" />
+  <component name="ProjectId" id="29Jly8xoQGw5o3uywOzIpmrCV24" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.micropython.configurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Gugarauj07\PycharmProjects\Eletronica_2022\Codes\Pico" />
+    </key>
+  </component>
+  <component name="RunManager" selected="MicroPython.Flash blink.py">
+    <configuration name="Flash a.py" type="MicroPythonConfigurationType" factoryName="MicroPython" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/a.py">
+      <module name="Eletronica_2022" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flash blink.py" type="MicroPythonConfigurationType" factoryName="MicroPython" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Codes/MicroPython/blink.py">
+      <module name="Eletronica_2022" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="MicroPython.Flash blink.py" />
+        <item itemvalue="MicroPython.Flash a.py" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="19c91941-fc79-418c-b681-118e48d856be" name="Changes" comment="" />
+      <created>1652839324317</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1652839324317</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Gas tank">
+      <created>1652839369783</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1652839369783</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Gas tank">
+      <created>1652839433396</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652839433396</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Gas tank" />
+    <option name="LAST_COMMIT_MESSAGE" value="Gas tank" />
+  </component>
+</project>
