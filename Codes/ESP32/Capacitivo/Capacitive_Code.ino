@@ -4,7 +4,7 @@ const int pinoLed = 12; //PINO DIGITAL UTILIZADO PELO LED
 void setup(){
   pinMode(pinoSinal, INPUT); //DEFINE O PINO COMO ENTRADA
   pinMode(pinoLed, OUTPUT); //DEFINE O PINO COMO SAÍDA
-  digitalWrite(pinoLed, LOW); //LED INICIA DESLIGADO
+  digitalWrite(pinoLed, LOW); //LED INICIA DESLIGADOq
 }
 void loop(){
   if(digitalRead(pinoSinal) == HIGH){ //SE A LEITURA DO PINO FOR IGUAL A LOW, FAZ
