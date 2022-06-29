@@ -24,6 +24,7 @@ void setup() {
   
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
+  esp_wifi_set_protocol(ifx, WIFI_PROTOCOL_LR);
 
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK) {
