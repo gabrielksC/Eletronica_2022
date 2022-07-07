@@ -1,4 +1,3 @@
-
 const double VCC = 3.3;             // NodeMCU on board 3.3v vcc
 const double R2 = 10000;            // 10k ohm series resistor
 const double adc_resolution = 1023; // 10-bit adc
@@ -7,6 +6,8 @@ const double A = 0.001129148;   // thermistor equation parameters
 const double B = 0.000234125;
 const double C = 0.0000000876741; 
 
+const int Pin = 34;
+
 void setup() {
   Serial.begin(9600);  /* Define baud rate for serial communication */
 }
@@ -14,7 +15,7 @@ void setup() {
 void loop() {
   double Vout, Rth, temperature, adc_value; 
 
-  adc_value = analogRead(A0); // Defines de PIN
+  adc_value = analogRead(Pin);
   Vout = (adc_value * VCC) / adc_resolution;
   Rth = (VCC * R2 / Vout) - R2;
 

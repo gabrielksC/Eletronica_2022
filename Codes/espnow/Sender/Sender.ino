@@ -1,19 +1,8 @@
-/*
-  Rui Santos
-  Complete project details at https://RandomNerdTutorials.com/esp-now-esp32-arduino-ide/
-  
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files.
-  
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-*/
-
 #include <esp_now.h>
 #include <WiFi.h>
 
-// REPLACE WITH YOUR RECEIVER MAC Address
-uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+// REPLACE WITH YOUR RECEIVER MAC Address 0C:B8:15:F2:F6:04
+uint8_t broadcastAddress[] = {0x0C, 0xB8, 0x15, 0xF2, 0xF6, 0x04};
 
 // Structure example to send data
 // Must match the receiver structure

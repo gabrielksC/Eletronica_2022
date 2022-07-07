@@ -1,10 +1,10 @@
 #include <Wire.h>
 #include <Adafruit_MLX90614.h>
-// #include <SoftwareSerial.h>
-// #include <LiquidCrystal_I2C.h>
+#include <SoftwareSerial.h>
+#include <LiquidCrystal_I2C.h>
 
 // Define o endereço utilizado pelo Adaptador I2C
-// LiquidCrystal_I2C lcd(0x27,20,4);
+LiquidCrystal_I2C lcd(0x27,20,4);
 
 #define pinVEL 2 // // Pino de interrupção para rotação da roda
 #define pinRPM 3 // Pino de interrupção para rotação do motor
@@ -17,6 +17,10 @@ void setup() {
  mlx.begin();
  mpu_setup();
 
+ lcd.begin(20, 4);
+//  lcd.init();
+ lcd.backlight();
+
  attachInterrupt (digitalPinToInterrupt(pinVEL), tacometro, RISING); //Interrupção para ler pulso da velocidade
  attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
  
@@ -27,4 +31,3 @@ void loop() {
   mlx_loop();
   velocidade();
 }
-
