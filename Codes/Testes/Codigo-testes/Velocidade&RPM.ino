@@ -8,9 +8,9 @@ void velocidade()
     RPM = (pulsosRPM/2 /*numero de pulsos da curva de onda do motor*/)*60; // Calculo do RPM do motor
 
     Serial.print(RPM);
-    Serial.print(' , ');
+    Serial.print(" , ");
     Serial.print(VEL);
-    Serial.println('');
+    Serial.println(" ");
 
     pulsosVEL = 0;
     pulsosRPM = 0;

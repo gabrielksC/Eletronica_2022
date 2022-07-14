@@ -30,6 +30,6 @@ void display()
   lcd.setCursor(15, 0);
   lcd.print("TEMP");
   lcd.setCursor(15, 2);
-  lcd.print(temp_amb);
+  lcd.print(temp_obj);
   delay(1000);
 }

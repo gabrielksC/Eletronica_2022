@@ -26,9 +26,14 @@ double temp_obj;
 // Endereco I2C do sensor MPU-6050
 const int MPU1 = 0x68;
 const int MPU2 = 0x69;
-// Variaveis para armazenar valores do sensor
-float GyrX1, GyrY1, GyrZ1;
-float GyrX2, GyrY2, GyrZ2;
+
+float AccX, AccY, AccZ, AccX2, AccY2, AccZ2;
+float GyroX, GyroY, GyroZ, GyroX2, GyroY2, GyroZ2;
+float accAngleX, accAngleY, gyroAngleX, gyroAngleY, gyroAngleZ, accAngleX2, accAngleY2, gyroAngleX2, gyroAngleY2, gyroAngleZ2;
+float roll, pitch, yaw, roll2, pitch2, yaw2;
+float AccErrorX, AccErrorY, GyroErrorX, GyroErrorY, GyroErrorZ;
+float elapsedTime, currentTime, previousTime;
+int c = 0;
 unsigned long int Mpu_millisInicial = 0; // tempo inicial para aceleração
 
 void setup() {

@@ -1,22 +1,46 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
+#include <SoftwareSerial.h> 
+#define pinVEL 36 // Pino de interrupção para rotação da roda
+
+unsigned long Velocidade_millisInicial = 0; //tempo inicial para velocidade  
+volatile byte pulsosVEL = 0; //contador de pulsos para velocidade
+float RAIO_RODA = 0.266;
+
 // REPLACE WITH YOUR RECEIVER MAC Address
 uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
 // Structure example to send data
 // Must match the receiver structure
 typedef struct struct_message {
-  char a[32];
-  int b;
-  float c;
-  bool d;
+  float VEL = 0; //velocidade em km/h
 } struct_message;
 
 // Create a struct_message called myData
 struct_message myData;
 
 esp_now_peer_info_t peerInfo;
+
+void velocidade()
+{
+  if((millis() - Velocidade_millisInicial) > 1000){
+    
+    noInterrupts();
+
+    myData.VEL = (pulsosVEL*0.04625*2*3.14*RAIO_RODA*3.6); // Calculo da velocidade
+    pulsosVEL = 0;
+
+    Velocidade_millisInicial = millis();
+    
+    interrupts();
+  }
+}
+
+void tacometro() 
+{
+  pulsosVEL++; // Função chamada no pino de interrupção
+}
 
 // callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
@@ -27,7 +51,9 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 void setup() {
   // Init Serial Monitor
   Serial.begin(115200);
- 
+
+  attachInterrupt (digitalPinToInterrupt(pinVEL), tacometro, RISING); //Interrupção para ler pulso da velocidade
+
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
 
@@ -54,11 +80,7 @@ void setup() {
 }
  
 void loop() {
-  // Set values to send
-  strcpy(myData.a, "THIS IS A CHAR");
-  myData.b = random(1,20);
-  myData.c = 1.2;
-  myData.d = false;
+  velocidade();
   
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
@@ -69,5 +91,5 @@ void loop() {
   else {
     Serial.println("Error sending the data");
   }
-  delay(2000);
+  delay(500);
 }

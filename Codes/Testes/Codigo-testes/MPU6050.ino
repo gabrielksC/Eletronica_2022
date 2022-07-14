@@ -1,126 +1,134 @@
 void mpu_setup(){
 
-  // Inicializa o MPU1
   Wire.begin();
+
+  Wire.beginTransmission(MPU1);       // Start communication with MPU6050 // MPU=0x68
+  Wire.write(0x6B);                  // Talk to the register 6B
+  Wire.write(0x00);                  // Make reset - place a 0 into the 6B register
+  Wire.endTransmission(true);        //end the transmission
+  Wire.beginTransmission(MPU2);       // Start communication with MPU6050 // MPU=0x68
+  Wire.write(0x6B);                  // Talk to the register 6B
+  Wire.write(0x00);                  // Make reset - place a 0 into the 6B register
+  Wire.endTransmission(true);        //end the transmission
+
   Wire.beginTransmission(MPU1);
-  Wire.write(0x6B);
-  Wire.write(0);
+  Wire.write(0x1C);                  //Talk to the ACCEL_CONFIG register (1C hex)
+  Wire.write(0x10);                  //Set the register bits as 00010000 (+/- 8g full scale range)
+  Wire.endTransmission(true);
+  Wire.beginTransmission(MPU2);
+  Wire.write(0x1C);                  //Talk to the ACCEL_CONFIG register (1C hex)
+  Wire.write(0x10);                  //Set the register bits as 00010000 (+/- 8g full scale range)
   Wire.endTransmission(true);
 
-  // Inicializa o MPU2
-  Wire.begin();
+  Wire.beginTransmission(MPU1);
+  Wire.write(0x1B);                   // Talk to the GYRO_CONFIG register (1B hex)
+  Wire.write(0x10);                   // Set the register bits as 00010000 (1000deg/s full scale)
+  Wire.endTransmission(true);
   Wire.beginTransmission(MPU2);
-  Wire.write(0x6B);
-  Wire.write(0);
+  Wire.write(0x1B);                   // Talk to the GYRO_CONFIG register (1B hex)
+  Wire.write(0x10);                   // Set the register bits as 00010000 (1000deg/s full scale)
   Wire.endTransmission(true);
 
-  // Configura Giroscópio para fundo de escala desejado
-  /*  Giros possiveis
-    Wire.write(0b00000000); // fundo de escala em +/-250°/s
-    Wire.write(0b00001000); // fundo de escala em +/-500°/s
-    Wire.write(0b00010000); // fundo de escala em +/-1000°/s
-    Wire.write(0b00011000); // fundo de escala em +/-2000°/s
-  */
-  Wire.beginTransmission(MPU1);
-  Wire.write(0x1B);
-  Wire.write(0x00011000);  // Trocar esse comando para fundo de escala desejado conforme acima
-  Wire.endTransmission();
-
-  Wire.beginTransmission(MPU2);
-  Wire.write(0x1B);
-  Wire.write(0x00011000);  // Trocar esse comando para fundo de escala desejado conforme acima
-  Wire.endTransmission();
-
-  // Configura Acelerometro para fundo de escala desejado
-  /*  Aceleracoes possiveis
-      Wire.write(0b00000000); // fundo de escala em +/-2g
-      Wire.write(0b00001000); // fundo de escala em +/-4g
-      Wire.write(0b00010000); // fundo de escala em +/-8g
-      Wire.write(0b00011000); // fundo de escala em +/-16g
-  */
-  // Wire.beginTransmission(MPU1);
-  // Wire.write(0x1C);
-  // Wire.write(0b00011000);  // Trocar esse comando para fundo de escala desejado conforme acima
-  // Wire.endTransmission();
-
-  // Wire.beginTransmission(MPU2);
-  // Wire.write(0x1C);
-  // Wire.write(0b00011000);  // Trocar esse comando para fundo de escala desejado conforme acima
-  // Wire.endTransmission();
 }
 
 void mpu_loop() {
   if((millis() - Mpu_millisInicial) > 1000){
-    // Comandos para iniciar transmissão de dados
-    // MPU 1
+    
+    // === Read acceleromter data === //
     Wire.beginTransmission(MPU1);
-    Wire.write(0x3B);
+    Wire.write(0x3B); // Start with register 0x3B (ACCEL_XOUT_H)
     Wire.endTransmission(false);
-    // Wire.requestFrom(MPU1, 14, true); // Solicita os dados ao sensor
+    // Wire.requestFrom(MPU1, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
+    //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
+    AccX = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
+    AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
+    AccZ = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
+    // Calculating Roll and Pitch from the accelerometer data
+    accAngleX = (atan(AccY / sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / PI) - 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details
+    accAngleY = (atan(-1 * AccX / sqrt(pow(AccY, 2) + pow(AccZ, 2))) * 180 / PI) + 1.58; // AccErrorY ~(-1.58)
 
-    // Armazena o valor dos sensores nas variaveis correspondentes
-    // AccX1 = Wire.read() << 8 | Wire.read(); //0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
-    // AccY1 = Wire.read() << 8 | Wire.read(); //0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
-    // AccZ1 = Wire.read() << 8 | Wire.read(); //0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
-    GyrX1 = Wire.read() << 8 | Wire.read(); //0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
-    GyrY1 = Wire.read() << 8 | Wire.read(); //0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
-    GyrZ1 = Wire.read() << 8 | Wire.read(); //0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-    Wire.endTransmission(true);
-
-   // MPU 2
     Wire.beginTransmission(MPU2);
-    Wire.write(0x3B);
+    Wire.write(0x3B); // Start with register 0x3B (ACCEL_XOUT_H)
     Wire.endTransmission(false);
-    // Wire.requestFrom(MPU2, 14, true); // Solicita os dados ao sensor
+    Wire.requestFrom(MPU2, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
+    //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
+    AccX2 = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
+    AccY2 = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
+    AccZ2 = (Wire.read() << 8 | Wire.read()) / 16384.0; // Z-axis value
+    // Calculating Roll and Pitch from the accelerometer data
+    accAngleX2 = (atan(AccY2 / sqrt(pow(AccX2, 2) + pow(AccZ2, 2))) * 180 / PI) - 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details
+    accAngleY2 = (atan(-1 * AccX2 / sqrt(pow(AccY2, 2) + pow(AccZ2, 2))) * 180 / PI) + 1.58; // AccErrorY ~(-1.58)
 
-    // Armazena o valor dos sensores nas variaveis correspondentes
-    // AccX2 = Wire.read() << 8 | Wire.read(); //0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
-    // AccY2 = Wire.read() << 8 | Wire.read(); //0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
-    // AccZ2 = Wire.read() << 8 | Wire.read(); //0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
-    GyrX2 = Wire.read() << 8 | Wire.read(); //0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
-    GyrY2 = Wire.read() << 8 | Wire.read(); //0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
-    GyrZ2 = Wire.read() << 8 | Wire.read(); //0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-    Wire.endTransmission(true);
+    // === Read gyroscope data === //
+    previousTime = currentTime;        // Previous time is stored before the actual time read
+    currentTime = millis();            // Current time actual time read
+    elapsedTime = (currentTime - previousTime) / 1000; // Divide by 1000 to get seconds
 
-    //Imprime na Serial os valores obtidos
-    /* Alterar divisão conforme fundo de escala escolhido:
-      Acelerômetro
-      +/-2g = 16384
-      +/-4g = 8192
-      +/-8g = 4096
-      +/-16g = 2048
+    Wire.beginTransmission(MPU1);
+    Wire.write(0x43); // Gyro data first register address 0x43
+    Wire.endTransmission(false);
+    // Wire.requestFrom(MPU1, 6, true); // Read 4 registers total, each axis value is stored in 2 registers
+    GyroX = (Wire.read() << 8 | Wire.read()) / 131.0; // For a 250deg/s range we have to divide first the raw value by 131.0, according to the datasheet
+    GyroY = (Wire.read() << 8 | Wire.read()) / 131.0;
+    GyroZ = (Wire.read() << 8 | Wire.read()) / 131.0;
 
-      Giroscópio
-      +/-250°/s = 131
-      +/-500°/s = 65.6
-      +/-1000°/s = 32.8
-      +/-2000°/s = 16.4
-    */
+    Wire.beginTransmission(MPU2);
+    Wire.write(0x43); // Gyro data first register address 0x43
+    Wire.endTransmission(false);
+    // Wire.requestFrom(MPU2, 6, true); // Read 4 registers total, each axis value is stored in 2 registers
+    GyroX2 = (Wire.read() << 8 | Wire.read()) / 131.0; // For a 250deg/s range we have to divide first the raw value by 131.0, according to the datasheet
+    GyroY2 = (Wire.read() << 8 | Wire.read()) / 131.0;
+    GyroZ2 = (Wire.read() << 8 | Wire.read()) / 131.0;
 
-    // Serial.print(AccX1*9.8 / 2048);
-    // Serial.print(" ");
-    // Serial.print(AccY1*9.8 / 2048);
-    // Serial.print(" ");
-    // Serial.println(AccZ1*9.8 / 2048);
+    // Correct the outputs with the calculated error values
+    GyroX = GyroX + 0.56; // GyroErrorX ~(-0.56)
+    GyroY = GyroY - 2; // GyroErrorY ~(2)
+    GyroZ = GyroZ + 0.79; // GyroErrorZ ~ (-0.8)
+    GyroX2 = GyroX2 + 0.56; // GyroErrorX ~(-0.56)
+    GyroY2 = GyroY2 - 2; // GyroErrorY ~(2)
+    GyroZ2 = GyroZ2 + 0.79; // GyroErrorZ ~ (-0.8)
 
-    // Serial.print(AccX2*9.8 / 2048);
-    // Serial.print(" ");
-    // Serial.print(AccY2*9.8 / 2048);
-    // Serial.print(" ");
-    // Serial.println(AccZ2*9.8 / 2048);
+    // Currently the raw values are in degrees per seconds, deg/s, so we need to multiply by sendonds (s) to get the angle in degrees
+    gyroAngleX = gyroAngleX + GyroX * elapsedTime; // deg/s * s = deg
+    gyroAngleY = gyroAngleY + GyroY * elapsedTime;
+    yaw =  yaw + GyroZ * elapsedTime;
+    gyroAngleX2 = gyroAngleX2 + GyroX2 * elapsedTime; // deg/s * s = deg
+    gyroAngleY2 = gyroAngleY2 + GyroY2 * elapsedTime;
+    yaw2 =  yaw2 + GyroZ2 * elapsedTime;
 
-    Serial.print(GyrX / 16.4);
-    Serial.print(' , ');
-    Serial.print(GyrY / 16.4);
-    Serial.print(' , ');
-    Serial.println(GyrZ / 16.4);
+      // Complementary filter - combine acceleromter and gyro angle values
+    roll = 0.96 * gyroAngleX + 0.04 * accAngleX;
+    pitch = 0.96 * gyroAngleY + 0.04 * accAngleY;
+    roll2 = 0.96 * gyroAngleX2 + 0.04 * accAngleX2;
+    pitch2 = 0.96 * gyroAngleY2 + 0.04 * accAngleY2;
 
-    Serial.print(GyrX2 / 16.4);
-    Serial.print(' , ');
-    Serial.print(GyrY2 / 16.4);
-    Serial.print(' , ');
-    Serial.println(GyrZ2 / 16.4);
-    Serial.print(' , ');
+      // Print the values on the serial monitor
+    Serial.print(roll);
+    Serial.print(" , ");
+    Serial.print(pitch);
+    Serial.print(" , ");
+    Serial.print(yaw);
+    Serial.print(" , ");
+
+    Serial.print(roll2);
+    Serial.print(" , ");
+    Serial.print(pitch2);
+    Serial.print(" , ");
+    Serial.print(yaw2);
+    Serial.print(" , ");
+
+    // Serial.print(GyroX1 / 16.4);
+    // Serial.print(' , ');
+    // Serial.print(GyroY1 / 16.4);
+    // Serial.print(' , ');
+    // Serial.println(GyroZ1 / 16.4);
+
+    // Serial.print(GyroX2 / 16.4);
+    // Serial.print(' , ');
+    // Serial.print(GyroY2 / 16.4);
+    // Serial.print(' , ');
+    // Serial.println(GyroZ2 / 16.4);
+    // Serial.print(' , ');
         
     Mpu_millisInicial = millis();
   }

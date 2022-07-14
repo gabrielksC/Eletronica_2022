@@ -5,8 +5,8 @@ void mlx_loop(){
   temp_obj = mlx.readObjectTempC();
   Temp_millisInicial = millis();
   Serial.print(temp_obj);
-  Serial.print(' , ');
+  Serial.print(" , ");
   Serial.print(temp_amb);
-  Serial.print(' , ');
+  Serial.print(" , ");
   }
 }
