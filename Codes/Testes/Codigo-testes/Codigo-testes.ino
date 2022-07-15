@@ -7,14 +7,14 @@
 LiquidCrystal_I2C lcd(0x27,20,4);
 
 // RPM E VELOCIDADE
-#define pinVEL 2 // // Pino de interrupção para rotação da roda
-#define pinRPM 3 // Pino de interrupção para rotação do motor
+#define pinVEL 33 // // Pino de interrupção para rotação da roda
+#define pinRPM 30 // Pino de interrupção para rotação do motor
 unsigned long Velocidade_millisInicial = 0; //tempo inicial para velocidade 
 volatile byte pulsosVEL = 0; //contador de pulsos para velocidade
 volatile byte pulsosRPM = 0; //contador de pulsos para velocidade
-unsigned int RPM = 0; //frequencia de rotacoes em RPM
-unsigned int VEL = 0; //velocidade em km/h
-float RAIO_RODA = 0.266;
+float RPM = 0; //frequencia de rotacoes em RPM
+float VEL = 0; //velocidade em km/h
+const float RAIO_RODA = 0.266;
 
 // TEMP
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
@@ -46,8 +46,9 @@ void setup() {
  lcd.init();
  lcd.backlight();
 
- attachInterrupt (digitalPinToInterrupt(pinVEL), tacometro, RISING); //Interrupção para ler pulso da velocidade
- attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
+  pinMode(pinVEL, INPUT);
+ attachInterrupt (pinVEL, tacometro, RISING); //Interrupção para ler pulso da velocidade
+//  attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
  
 }
 

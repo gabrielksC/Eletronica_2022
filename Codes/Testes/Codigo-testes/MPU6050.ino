@@ -50,7 +50,7 @@ void mpu_loop() {
     Wire.beginTransmission(MPU2);
     Wire.write(0x3B); // Start with register 0x3B (ACCEL_XOUT_H)
     Wire.endTransmission(false);
-    Wire.requestFrom(MPU2, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
+    // Wire.requestFrom(MPU2, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
     //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
     AccX2 = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
     AccY2 = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
