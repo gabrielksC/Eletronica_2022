@@ -51,7 +51,7 @@ void setup() {
 
 void loop() {
   display();
-  mpu_loop();
   mlx_loop();
   velocidade();
+  mpu_loop();
 }
