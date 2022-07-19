@@ -10,7 +10,7 @@ void velocidade()
     Serial.print(RPM);
     Serial.print(" , ");
     Serial.print(VEL);
-    Serial.println(" ");
+    Serial.print(" , ");
 
     pulsosVEL = 0;
     pulsosRPM = 0;
