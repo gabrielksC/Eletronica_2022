@@ -27,15 +27,15 @@ double temp_obj;
 // Endereco I2C do sensor MPU-6050
 const int MPU1 = 0x68;
 const int MPU2 = 0x69;
-float currentAngleX_A, currentAngleY_A, currentAngleZ_A;
+float currentAngleX_A, currentAngleY_A, currentAngleZ_A, currentGyroX_A, currentGyroY_A, currentGyroZ_A;
 float currentAngleX_B, currentAngleY_B, currentAngleZ_B;
 
 MPU6050 mpuA(Wire);
-MPU6050 mpuB(Wire);
+// MPU6050 mpuB(Wire);
 unsigned long int Mpu_millisInicial = 0; // tempo inicial para aceleração
 
 void setup() {
- Serial.begin(9600);
+ Serial.begin(115200);
 
  mlx.begin();
  mpu_setup();
@@ -50,8 +50,9 @@ void setup() {
 }
 
 void loop() {
-  display();
+  
   mlx_loop();
   velocidade();
   mpu_loop();
+  display();
 }
