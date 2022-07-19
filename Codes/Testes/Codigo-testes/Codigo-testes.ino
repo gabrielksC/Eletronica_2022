@@ -48,6 +48,9 @@ void setup() {
 
   pinMode(pinVEL, INPUT);
  attachInterrupt (pinVEL, tacometro, RISING); //Interrupção para ler pulso da velocidade
+
+  pinMode(pinRPM, INPUT);
+ attachInterrupt (pinRPM, tacometro, RISING); //Interrupção para ler pulso da velocidade
 //  attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
  
 }
