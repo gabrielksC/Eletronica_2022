@@ -39,7 +39,8 @@ void setup() {
 
  mlx.begin();
  mpu_setup();
-
+ SD_setup();
+ 
 //  lcd.begin(20, 4);
  lcd.init();
  lcd.backlight();
@@ -58,5 +59,6 @@ void loop() {
   mlx_loop();
   velocidade();
   mpu_loop();
+  SD_loop();
   display();
 }
