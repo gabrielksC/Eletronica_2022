@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h> 
-#define pinVEL 36 // Pino de interrupção para rotação da roda
+#define pinVEL 33 // Pino de interrupção para rotação da roda
 
 unsigned long Velocidade_millisInicial = 0; //tempo inicial para velocidade  
 volatile byte pulsosVEL = 0; //contador de pulsos para velocidade
