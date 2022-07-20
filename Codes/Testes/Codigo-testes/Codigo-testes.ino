@@ -1,13 +1,16 @@
-#include <Wire.h>
-#include <Adafruit_MLX90614.h>
-#include <SoftwareSerial.h>
-#include <LiquidCrystal_I2C.h>
-#include <MPU6050_light.h>
+// SD CARD
+#include "FS.h"
+#include "SD.h"
+#include <SPI.h>
+#define SD_CS 5
+String dataMessage;
 
 // Define o endereço utilizado pelo Adaptador I2C
+#include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27,20,4);
 
 // RPM E VELOCIDADE
+#include <SoftwareSerial.h>
 #define pinVEL 2 // // Pino de interrupção para rotação da roda
 #define pinRPM 3 // Pino de interrupção para rotação do motor
 unsigned long Velocidade_millisInicial = 0; //tempo inicial para velocidade 
@@ -18,13 +21,15 @@ unsigned int VEL = 0; //velocidade em km/h
 float RAIO_RODA = 0.266;
 
 // TEMP
+#include <Adafruit_MLX90614.h>
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 unsigned long Temp_millisInicial = 0; //tempo inicial para temperatura 
 double temp_amb; 
 double temp_obj; 
 
 // GIROSCOPIO
-// Endereco I2C do sensor MPU-6050
+#include <Wire.h>
+#include <MPU6050_light.h>
 const int MPU1 = 0x68;
 const int MPU2 = 0x69;
 float currentAngleX_A, currentAngleY_A, currentAngleZ_A, currentGyroX_A, currentGyroY_A, currentGyroZ_A;

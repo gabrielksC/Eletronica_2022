@@ -1,14 +1,3 @@
-/*
- * SD Card Module Interfacing with ESP32 Wifi + Bluetooth Module
- * https://www.electroniclinic.com/
- */
-
-#include "FS.h"
-#include "SD.h"
-#include <SPI.h>
-
-#define SD_CS 5
-String dataMessage;
 
 void writeFile(fs::FS &fs, const char * path, const char * message) {
   Serial.printf("Writing file: %s\n", path);
