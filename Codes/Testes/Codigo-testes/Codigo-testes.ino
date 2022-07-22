@@ -1,3 +1,17 @@
+// espnow
+#include <esp_now.h>
+#include <WiFi.h>
+
+// REPLACE WITH YOUR RECEIVER MAC Address
+uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+typedef struct struct_message {
+  String transmition_message;
+} struct_message;
+
+struct_message myData;
+esp_now_peer_info_t peerInfo;
+
 // SD CARD
 #include "FS.h"
 #include "SD.h"
@@ -45,6 +59,7 @@ void setup() {
  mlx.begin();
  mpu_setup();
  SD_setup();
+ espnow_setup();
  
 //  lcd.begin(20, 4);
  lcd.init();
@@ -54,7 +69,8 @@ void setup() {
  attachInterrupt (pinVEL, tacometro, RISING); //Interrupção para ler pulso da velocidade
 
   pinMode(pinRPM, INPUT);
- attachInterrupt (pinRPM, tacometro, RISING); //Interrupção para ler pulso da velocidade
+ attachInterrupt (pinRPM, tacometro, RISING); //Interrupção para ler pulso RPM
+ 
 //  attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
  
 }
@@ -64,6 +80,7 @@ void loop() {
   mlx_loop();
   velocidade();
   mpu_loop();
+  espnow_loop();
   SD_loop();
   display();
 }
