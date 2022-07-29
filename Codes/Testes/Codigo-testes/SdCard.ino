@@ -2,9 +2,7 @@
 void SD_setup() {
   Serial.begin(115200);
 
-  time_t rawtime;
-  struct tm *info;
-  char buffer[80];
+  
 
   time(&rawtime);
 
@@ -45,7 +43,7 @@ void SD_loop() {
   dataMessage =  String(currentAngleX_A) + String(currentAngleY_A) + String(currentAngleZ_A) + String(currentGyroX_A) + String(currentGyroY_A) + String(currentGyroZ_A) + "\n";
   // Serial.print("Save data: ");
   // Serial.println(dataMessage);
-  appendFile(SD, "/data.txt", dataMessage.c_str());
+  appendFile(SD, ("/%s.txt", buffer), dataMessage.c_str());
 }
 
 // Write to the SD card (DON'T MODIFY THIS FUNCTION)

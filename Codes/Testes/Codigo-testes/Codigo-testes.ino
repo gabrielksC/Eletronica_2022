@@ -19,6 +19,9 @@ esp_now_peer_info_t peerInfo;
 #include <time.h>
 #define SD_CS 5
 String dataMessage;
+time_t rawtime;
+struct tm *info;
+char buffer[80];
 
 // Define o endereço utilizado pelo Adaptador I2C
 #include <LiquidCrystal_I2C.h>
