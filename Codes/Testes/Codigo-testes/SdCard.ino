@@ -2,6 +2,16 @@
 void SD_setup() {
   Serial.begin(115200);
 
+  time_t rawtime;
+  struct tm *info;
+  char buffer[80];
+
+  time(&rawtime);
+
+  info = localtime(&rawtime);
+
+  strftime(buffer, 80, "%Hh-%Mm-%Ss_%d-%m-%Y", info);
+
   // Initialize SD card
   SD.begin(SD_CS);  
   if(!SD.begin(SD_CS)) {
@@ -18,11 +28,11 @@ void SD_setup() {
     Serial.println("ERROR - SD card initialization failed!");
     return;    // init failed
   }
-  File file = SD.open("/dataMPU.txt");
+  File file = SD.open("/%s.txt", buffer);
   if(!file) {
     Serial.println("File doens't exist");
     Serial.println("Creating file...");
-    writeFile(SD, "/data.txt", "ESP32 and SD Card \r\n");
+    writeFile(SD, ("/%s.txt", buffer), "oi");
   }
   else {
     Serial.println("File already exists");  
