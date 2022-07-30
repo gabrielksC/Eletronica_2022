@@ -1,14 +1,5 @@
 
 void SD_setup() {
-  Serial.begin(115200);
-
-  
-
-  time(&rawtime);
-
-  info = localtime(&rawtime);
-
-  strftime(buffer, 80, "%Hh-%Mm-%Ss_%d-%m-%Y", info);
 
   // Initialize SD card
   SD.begin(SD_CS);  
@@ -26,24 +17,19 @@ void SD_setup() {
     Serial.println("ERROR - SD card initialization failed!");
     return;    // init failed
   }
-  File file = SD.open("/%s.txt", buffer);
+  File file = SD.open("/datalog.csv");
   if(!file) {
-    Serial.println("File doens't exist");
-    Serial.println("Creating file...");
-    writeFile(SD, ("/%s.txt", buffer), "oi");
-  }
-  else {
-    Serial.println("File already exists");  
+    writeFile(SD, "/datalog.csv", "angleX , angleY , angleZ , gyroX , gyroY , gyroZ , temp_obj , temp_amb");
   }
   file.close();
 }
 
 // Write the sensor readings on the SD card
 void SD_loop() {
-  dataMessage =  String(currentAngleX_A) + String(currentAngleY_A) + String(currentAngleZ_A) + String(currentGyroX_A) + String(currentGyroY_A) + String(currentGyroZ_A) + "\n";
+  dataMessage =  String(currentAngleX_A) + " , " + String(currentAngleY_A) + " , " + String(currentAngleZ_A) + " , " + String(currentGyroX_A) + " , " + String(currentGyroY_A) + " , " + String(currentGyroZ_A) + " , " + String(temp_obj) + " , " + String(temp_amb) + "\n";
   // Serial.print("Save data: ");
   // Serial.println(dataMessage);
-  appendFile(SD, ("/%s.txt", buffer), dataMessage.c_str());
+  appendFile(SD, "/datalog.csv", dataMessage.c_str());
 }
 
 // Write to the SD card (DON'T MODIFY THIS FUNCTION)
@@ -63,15 +49,12 @@ void writeFile(fs::FS &fs, const char * path, const char * message) {
 }
 // Append data to the SD card (DON'T MODIFY THIS FUNCTION)
 void appendFile(fs::FS &fs, const char * path, const char * message) {
-  Serial.printf("Appending to file: %s\n", path);
   File file = fs.open(path, FILE_APPEND);
   if(!file) {
     Serial.println("Failed to open file for appending");
     return;
   }
-  if(file.print(message)) {
-    Serial.println("Message appended");
-  } else {
+  if(!file.print(message)) {
     Serial.println("Append failed");
   }
   file.close();

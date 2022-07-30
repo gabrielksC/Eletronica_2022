@@ -36,13 +36,7 @@ void mpu_loop()
     // currentAngleX_B = mpuB.getAngleX();
     // currentAngleY_B = mpuB.getAngleY();
     // currentAngleZ_B = mpuB.getAngleZ();
-
-    Serial.print(currentAngleX_A);
-    Serial.print(" , ");
-    Serial.print(currentAngleY_A);
-    Serial.print(" , ");
-    Serial.print(currentAngleZ_A);
-    Serial.print(" , ");
+    
     // Serial.print(currentAngleX_B);
     // Serial.print(" , ");
     // Serial.print(currentAngleY_B);

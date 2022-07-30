@@ -19,9 +19,6 @@ esp_now_peer_info_t peerInfo;
 #include <time.h>
 #define SD_CS 5
 String dataMessage;
-time_t rawtime;
-struct tm *info;
-char buffer[80];
 
 // Define o endereço utilizado pelo Adaptador I2C
 #include <LiquidCrystal_I2C.h>
@@ -87,4 +84,21 @@ void loop() {
   espnow_loop();
   SD_loop();
   display();
+
+  Serial.print(temp_obj);
+  Serial.print(" , ");
+  Serial.print(temp_amb);
+  Serial.print(" , ");
+  Serial.print(RPM);
+  Serial.print(" , ");
+  Serial.print(VEL);
+  Serial.print(" , ");
+  Serial.print(currentAngleX_A);
+  Serial.print(" , ");
+  Serial.print(currentAngleY_A);
+  Serial.print(" , ");
+  Serial.print(currentAngleZ_A);
+  Serial.print(" , ");
+  Serial.println();
+
 }

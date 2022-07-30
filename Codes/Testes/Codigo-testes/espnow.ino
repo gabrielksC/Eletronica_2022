@@ -1,5 +1,4 @@
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  Serial.print("\r\nLast Packet Send Status:\t");
   Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
 
@@ -31,7 +30,7 @@ void espnow_setup() {
 
 void espnow_loop() {
   // Set values to send
-  myData.transmition_message = String(temp_obj) + String(RPM) + String(VEL) + String(currentAngleX_A) + String(currentAngleY_A) + String(currentAngleZ_A) + "\n";
+  myData.transmition_message = String(temp_obj) + " , " + String(RPM) + " , " +  String(VEL) + " , " +  String(currentAngleX_A) + " , " +  String(currentAngleY_A) + " , " +  String(currentAngleZ_A) + "\n";
 
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
