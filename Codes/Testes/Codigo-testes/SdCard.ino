@@ -19,7 +19,7 @@ void SD_setup() {
   }
   File file = SD.open("/datalog.csv");
   if(!file) {
-    writeFile(SD, "/datalog.csv", "angleX , angleY , angleZ , gyroX , gyroY , gyroZ , temp_obj , temp_amb");
+    writeFile(SD, "/datalog.csv", "angleX , angleY , angleZ , gyroX , gyroY , gyroZ , temp_obj , temp_amb \n");
   }
   file.close();
 }

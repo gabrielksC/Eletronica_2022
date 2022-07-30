@@ -3,7 +3,8 @@
 #include <WiFi.h>
 
 // REPLACE WITH YOUR RECEIVER MAC Address
-uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+// 94:B5:55:2D:0B:08
+uint8_t broadcastAddress[] = {0x98, 0xB5, 0x55, 0x2D, 0x0B, 0x08};
 
 typedef struct struct_message {
   String transmition_message;
@@ -28,8 +29,7 @@ LiquidCrystal_I2C lcd(0x27,20,4);
 #include <SoftwareSerial.h>
 #define pinVEL 33 // // Pino de interrupção para rotação da roda
 #define pinRPM 30 // Pino de interrupção para rotação do motor
-
-unsigned long Velocidade_millisInicial = 0; //tempo inicial para velocidade 
+ 
 volatile byte pulsosVEL = 0; //contador de pulsos para velocidade
 volatile byte pulsosRPM = 0; //contador de pulsos para velocidade
 float RPM = 0; //frequencia de rotacoes em RPM
@@ -38,8 +38,7 @@ const float RAIO_RODA = 0.266;
 
 // TEMP
 #include <Adafruit_MLX90614.h>
-Adafruit_MLX90614 mlx = Adafruit_MLX90614();
-unsigned long Temp_millisInicial = 0; //tempo inicial para temperatura 
+Adafruit_MLX90614 mlx = Adafruit_MLX90614(); 
 double temp_amb; 
 double temp_obj; 
 
@@ -52,7 +51,6 @@ float currentAngleX_A, currentAngleY_A, currentAngleZ_A, currentGyroX_A, current
 // float currentAngleX_B, currentAngleY_B, currentAngleZ_B;
 MPU6050 mpuA(Wire);
 // MPU6050 mpuB(Wire);
-unsigned long int Mpu_millisInicial = 0; // tempo inicial para aceleração
 
 void setup() {
  Serial.begin(115200);
@@ -98,7 +96,6 @@ void loop() {
   Serial.print(currentAngleY_A);
   Serial.print(" , ");
   Serial.print(currentAngleZ_A);
-  Serial.print(" , ");
   Serial.println();
 
 }

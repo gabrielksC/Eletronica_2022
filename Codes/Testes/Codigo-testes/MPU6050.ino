@@ -22,8 +22,6 @@ void mpu_setup()
 }
 void mpu_loop()
 {
-  if((millis()-Mpu_millisInicial) > 1000){
-
      mpuA.update();
     currentAngleX_A = mpuA.getAngleX();
     currentAngleY_A = mpuA.getAngleY();
@@ -43,7 +41,4 @@ void mpu_loop()
     // Serial.print(" , ");
     // Serial.print(currentAngleZ_B);
     // Serial.println(" ");
-
-    Mpu_millisInicial = millis();
-  }
 }
