@@ -3,9 +3,8 @@ void SD_setup() {
 
   // Initialize SD card
   SD.begin(SD_CS);  
-  if(!SD.begin(SD_CS)) {
+  while(!SD.begin(SD_CS)) {
     Serial.println("Card Mount Failed");
-    return;
   }
   uint8_t cardType = SD.cardType();
   if(cardType == CARD_NONE) {
@@ -19,7 +18,7 @@ void SD_setup() {
   }
   File file = SD.open("/datalog.csv");
   if(!file) {
-    writeFile(SD, "/datalog.csv", "angleX , angleY , angleZ , gyroX , gyroY , gyroZ , temp_obj , temp_amb");
+    writeFile(SD, "/datalog.csv", "angleX , angleY , angleZ , gyroX , gyroY , gyroZ , temp_obj , temp_amb\n");
   }
   file.close();
 }
