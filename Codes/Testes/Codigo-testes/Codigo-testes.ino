@@ -3,7 +3,8 @@
 #include <WiFi.h>
 
 // REPLACE WITH YOUR RECEIVER MAC Address
-uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+// 94:B5:55:2C:F5:EC
+uint8_t broadcastAddress[] = {0x94, 0xB5, 0x55, 0x2C, 0xF5, 0xEC};
 
 typedef struct struct_message {
   String transmition_message;
@@ -35,6 +36,7 @@ volatile byte pulsosRPM = 0; //contador de pulsos para velocidade
 float RPM = 0; //frequencia de rotacoes em RPM
 float VEL = 0; //velocidade em km/h
 const float RAIO_RODA = 0.266;
+const double PERIMETRO_RODA = 1.72161199;
 
 // TEMP
 #include <Adafruit_MLX90614.h>
@@ -98,7 +100,6 @@ void loop() {
   Serial.print(currentAngleY_A);
   Serial.print(" , ");
   Serial.print(currentAngleZ_A);
-  Serial.print(" , ");
   Serial.println();
 
 }
