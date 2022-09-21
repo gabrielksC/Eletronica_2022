@@ -5,6 +5,7 @@ void SD_setup() {
   SD.begin(SD_CS);  
   while(!SD.begin(SD_CS)) {
     Serial.println("Card Mount Failed");
+    return;
   }
   uint8_t cardType = SD.cardType();
   if(cardType == CARD_NONE) {

@@ -7,7 +7,13 @@
 uint8_t broadcastAddress[] = {0x94, 0xB5, 0x55, 0x2C, 0xF5, 0xEC};
 
 typedef struct struct_message {
-  String transmition_message;
+  double temp_obj;
+  double temp_amb; 
+  float RPM;
+  float VEL;
+  float Gyro_X;
+  float Gyro_Y;
+  float Gyro_Z;
 } struct_message;
 
 struct_message myData;
@@ -27,8 +33,8 @@ LiquidCrystal_I2C lcd(0x27,20,4);
 
 // RPM E VELOCIDADE
 #include <SoftwareSerial.h>
-#define pinVEL 33 // // Pino de interrupção para rotação da roda
-#define pinRPM 30 // Pino de interrupção para rotação do motor
+#define pinVEL 16 // // Pino de interrupção para rotação da roda
+#define pinRPM 17 // Pino de interrupção para rotação do motor
 
 unsigned long Velocidade_millisInicial = 0; //tempo inicial para velocidade 
 volatile byte pulsosVEL = 0; //contador de pulsos para velocidade
@@ -64,7 +70,7 @@ void setup() {
  SD_setup();
  espnow_setup();
  
-//  lcd.begin(20, 4);
+ lcd.begin(20, 4);
  lcd.init();
  lcd.backlight();
 
@@ -72,7 +78,7 @@ void setup() {
  attachInterrupt (pinVEL, tacometro, RISING); //Interrupção para ler pulso da velocidade
 
   pinMode(pinRPM, INPUT);
- attachInterrupt (pinRPM, tacometro, RISING); //Interrupção para ler pulso RPM
+ attachInterrupt (pinRPM, RPMmotor, RISING); //Interrupção para ler pulso RPM
  
 //  attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
  
