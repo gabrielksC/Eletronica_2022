@@ -19,12 +19,17 @@ struct_message myData;
 // callback function that will be executed when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&myData, incomingData, sizeof(myData));
-  Serial.print("Bytes received: ");
-  Serial.println(len);
-  Serial.println(myData.temp_obj);
-  Serial.println(myData.temp_amb );
-  Serial.println(myData.VEL);
-  Serial.println(myData.RPM);
+  Serial.print(myData.temp_obj);
+  Serial.print(" , ");
+  Serial.print(myData.temp_amb );
+  Serial.print(" , ");
+  Serial.print(myData.VEL);
+  Serial.print(" , ");
+  Serial.print(myData.RPM);
+  Serial.print(" , ");
+  Serial.print(myData.Gyro_Y);
+  Serial.print(" , ");
+  Serial.print(myData.Gyro_X);
   Serial.println();
 }
  
