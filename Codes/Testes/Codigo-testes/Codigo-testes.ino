@@ -4,7 +4,7 @@
 
 // REPLACE WITH YOUR RECEIVER MAC Address
 // 94:B5:55:2C:F5:EC
-uint8_t broadcastAddress[] = {0x94, 0xB5, 0x55, 0x2C, 0xF5, 0xEC};
+uint8_t broadcastAddress[] = {0x94, 0xB5, 0x55, 0x2D, 0x0B, 0x08};
 
 typedef struct struct_message {
   double temp_obj;
@@ -26,7 +26,7 @@ esp_now_peer_info_t peerInfo;
 #include <time.h>
 #define SD_CS 5
 String dataMessage;
-
+bool SDsucceed;
 // Define o endereço utilizado pelo Adaptador I2C
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27,20,4);

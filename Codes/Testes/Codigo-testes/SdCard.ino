@@ -17,7 +17,7 @@ void SD_setup() {
     Serial.println("ERROR - SD card initialization failed!");
     return;    // init failed
   }
-  File file = SD.open("/datalog.csv");
+  File file = SD.open("/datalog.txt");
   if(!file) {
     writeFile(SD, "/datalog.csv", "angleX , angleY , angleZ , gyroX , gyroY , gyroZ , temp_obj , temp_amb\n");
   }
@@ -26,7 +26,7 @@ void SD_setup() {
 
 // Write the sensor readings on the SD card
 void SD_loop() {
-  dataMessage =  String(currentAngleX_A) + " , " + String(currentAngleY_A) + " , " + String(currentAngleZ_A) + " , " + String(currentGyroX_A) + " , " + String(currentGyroY_A) + " , " + String(currentGyroZ_A) + " , " + String(temp_obj) + " , " + String(temp_amb) + "\n";
+  dataMessage =  String(currentAngleX_A) + " , " + String(currentAngleY_A) + " , " + String(currentAngleZ_A) + " , " + String(currentGyroX_A) + " , " + String(currentGyroY_A) + " , " + String(currentGyroZ_A) + " , " + String(temp_obj) + " , " + String(temp_amb) + " , " + String(VEL) + " , " + String(RPM) + "\n";
   // Serial.print("Save data: ");
   // Serial.println(dataMessage);
   appendFile(SD, "/datalog.csv", dataMessage.c_str());

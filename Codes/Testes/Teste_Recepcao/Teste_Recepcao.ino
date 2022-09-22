@@ -4,8 +4,7 @@
 // Structure example to receive data
 // Must match the sender structure
 typedef struct struct_message {
-  double temp_obj;  m
-  
+  double temp_obj;
   double temp_amb;
   float RPM; 
   float VEL;
