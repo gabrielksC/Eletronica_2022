@@ -1,3 +1,5 @@
+#include <Wire.h>
+
 // espnow
 #include <esp_now.h>
 #include <WiFi.h>
@@ -33,7 +35,7 @@ LiquidCrystal_I2C lcd(0x27,20,4);
 
 // RPM E VELOCIDADE
 #include <SoftwareSerial.h>
-#define pinVEL 16 // // Pino de interrupção para rotação da roda
+#define pinVEL 15 // // Pino de interrupção para rotação da roda
 #define pinRPM 17 // Pino de interrupção para rotação do motor
 
 unsigned long Velocidade_millisInicial = 0; //tempo inicial para velocidade 
@@ -45,14 +47,12 @@ const float RAIO_RODA = 0.266;
 const double PERIMETRO_RODA = 1.72161199;
 
 // TEMP
-#include <Adafruit_MLX90614.h>
-Adafruit_MLX90614 mlx = Adafruit_MLX90614();
-unsigned long Temp_millisInicial = 0; //tempo inicial para temperatura 
+#include <SparkFunMLX90614.h> // SparkFunMLX90614 Arduino library
+IRTherm therm; // Create an IRTherm object to interact with throughout
 double temp_amb; 
 double temp_obj; 
 
 // GIROSCOPIO
-#include <Wire.h>
 #include <MPU6050_light.h>
 const int MPU1 = 0x68;
 const int MPU2 = 0x69;
@@ -63,35 +63,37 @@ MPU6050 mpuA(Wire);
 unsigned long int Mpu_millisInicial = 0; // tempo inicial para aceleração
 
 void setup() {
+  
  Serial.begin(115200);
 
- mlx.begin();
  mpu_setup();
  SD_setup();
  espnow_setup();
  
  lcd.begin(20, 4);
- lcd.init();
  lcd.backlight();
+ display_setup();
 
-  pinMode(pinVEL, INPUT);
- attachInterrupt (pinVEL, tacometro, RISING); //Interrupção para ler pulso da velocidade
+ 
+//   pinMode(pinVEL, INPUT);
+//  attachInterrupt (pinVEL, tacometro, RISING); //Interrupção para ler pulso da velocidade
 
   pinMode(pinRPM, INPUT);
  attachInterrupt (pinRPM, RPMmotor, RISING); //Interrupção para ler pulso RPM
  
-//  attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
- 
+//attachInterrupt (digitalPinToInterrupt(pinRPM), RPMmotor, RISING); //Interrupção para ler pulso do RPM
+  attachInterrupt (digitalPinToInterrupt(pinVEL), tacometro, RISING); //Interrupção para ler pulso da velocidade
+
 }
 
 void loop() {
   
-  mlx_loop();
+  tempInfra();
   velocidade();
   mpu_loop();
   espnow_loop();
   SD_loop();
-  display();
+  display_loop();
 
   Serial.print(temp_obj);
   Serial.print(" , ");

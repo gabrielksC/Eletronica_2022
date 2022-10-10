@@ -1,6 +1,6 @@
-void display()
-{
-  lcd.clear();
+void display_setup()
+{ 
+  lcd.init();
   lcd.setCursor(5, 0);
   lcd.print(" |");
   lcd.setCursor(5, 1);
@@ -11,12 +11,8 @@ void display()
   lcd.print(" |");
   lcd.setCursor(0, 0);
   lcd.print("SPEED");
-  lcd.setCursor(0, 2);
-  lcd.print(VEL);
   lcd.setCursor(8, 0);
   lcd.print("RPM");
-  lcd.setCursor(8, 2);
-  lcd.print(RPM);
 
   lcd.setCursor(12, 0);
   lcd.print(" |");
@@ -29,7 +25,13 @@ void display()
 
   lcd.setCursor(15, 0);
   lcd.print("TEMP");
+}
+
+void display_loop(){
+  lcd.setCursor(0, 2);
+  lcd.print(VEL);  
+  lcd.setCursor(8, 2);
+  lcd.print(RPM); 
   lcd.setCursor(15, 2);
-  lcd.print(temp_obj);
-  delay(1000);
+  lcd.print(temp_obj); 
 }
