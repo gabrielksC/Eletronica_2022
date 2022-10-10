@@ -22,6 +22,7 @@ void mpu_setup()
 }
 void mpu_loop()
 {
+  mpuA.begin();
   if((millis()-Mpu_millisInicial) > 100){
 
      mpuA.update();
