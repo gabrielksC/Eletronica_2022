@@ -4,8 +4,7 @@
 // Structure example to receive data
 // Must match the sender structure
 typedef struct struct_message {
-  double temp_obj;  m
-  
+  double temp_obj;
   double temp_amb;
   float RPM; 
   float VEL;
@@ -22,10 +21,19 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&myData, incomingData, sizeof(myData));
   Serial.print("Bytes received: ");
   Serial.println(len);
-  Serial.println(myData.temp_obj);
-  Serial.println(myData.temp_amb );
-  Serial.println(myData.VEL);
-  Serial.println(myData.RPM);
+  Serial.print(myData.temp_obj);
+  Serial.print(" , ");
+  Serial.print(myData.temp_amb );
+  Serial.print(" , ");
+  Serial.print(myData.VEL);
+  Serial.print(" , ");
+  Serial.print(myData.RPM);
+  Serial.print(" , ");
+  Serial.print(myData.Gyro_X);
+  Serial.print(" , ");
+  Serial.print(myData.Gyro_Y);
+  Serial.print(" , ");
+  Serial.print(myData.Gyro_Z);
   Serial.println();
 }
  
