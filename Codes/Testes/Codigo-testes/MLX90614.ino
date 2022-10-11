@@ -8,6 +8,7 @@ void iniciaInfra(){
 }
 
 
+
 void tempInfra() {
   iniciaInfra();
   delay(10);
@@ -21,5 +22,6 @@ void tempInfra() {
     //Serial.println();
     temp_amb = therm.ambient(); 
     temp_obj = therm.object();     
+
   }
 }

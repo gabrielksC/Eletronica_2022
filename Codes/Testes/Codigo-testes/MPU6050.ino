@@ -21,10 +21,10 @@ void mpu_setup()
 }
 void mpu_loop()
 {
-  mpuA.begin();
-  if((millis()-Mpu_millisInicial) > 100){
 
-     mpuA.update();
+  if((millis()- Mpu_millisInicial) > 10){
+
+    mpuA.update();
     currentAngleX_A = mpuA.getAngleX();
     currentAngleY_A = mpuA.getAngleY();
     currentAngleZ_A = mpuA.getAngleZ();

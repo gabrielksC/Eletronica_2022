@@ -39,6 +39,8 @@ void espnow_loop() {
   myData.Gyro_X = currentAngleX_A;
   myData.Gyro_Y = currentAngleY_A;
   myData.Gyro_Z = currentAngleZ_A;
+  myData.ACC = ACC;
+  myData.DISTANCIA = DISTANCIA;
   
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
