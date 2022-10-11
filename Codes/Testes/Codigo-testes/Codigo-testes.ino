@@ -4,7 +4,7 @@
 
 // REPLACE WITH YOUR RECEIVER MAC Address
 // 94:B5:55:2C:F5:EC
-uint8_t broadcastAddress[] = {0x94, 0xB5, 0x55, 0x2C, 0xF5, 0xEC};
+uint8_t broadcastAddress[] = {0x94, 0xB5, 0x55, 0x2D, 0x0B, 0x08};
 
 typedef struct struct_message {
   double temp_obj;
@@ -14,6 +14,8 @@ typedef struct struct_message {
   float Gyro_X;
   float Gyro_Y;
   float Gyro_Z;
+  float ACC;
+  float DISTANCIA;
 } struct_message;
 
 struct_message myData;
@@ -26,7 +28,7 @@ esp_now_peer_info_t peerInfo;
 #include <time.h>
 #define SD_CS 5
 String dataMessage;
-
+bool SDsucceed;
 // Define o endereço utilizado pelo Adaptador I2C
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27,20,4);
@@ -41,8 +43,11 @@ volatile byte pulsosVEL = 0; //contador de pulsos para velocidade
 volatile byte pulsosRPM = 0; //contador de pulsos para velocidade
 float RPM = 0; //frequencia de rotacoes em RPM
 float VEL = 0; //velocidade em km/h
+float ACC = 0;
+float DISTANCIA = 0;
 const float RAIO_RODA = 0.266;
 const double PERIMETRO_RODA = 1.72161199;
+
 
 // TEMP
 #include <Adafruit_MLX90614.h>
