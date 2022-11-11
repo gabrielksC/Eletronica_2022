@@ -29,7 +29,10 @@ void tacometro()
 }
 
 void setup(){
+  
   Serial.begin(9600);
+  //pinMode(pinVEL,INPUT);
+  //attachInterrupt ((pinVEL), tacometro, FALLING);
   attachInterrupt (digitalPinToInterrupt(pinVEL), tacometro, RISING); //Interrupção para ler pulso da velocidade
 }
 void loop(){
