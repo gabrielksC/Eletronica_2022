@@ -16,6 +16,8 @@ typedef struct struct_message {
   float Gyro_X;
   float Gyro_Y;
   float Gyro_Z;
+  float ACC;
+  float DISTANCIA;
 } struct_message;
 
 struct_message myData;
@@ -43,8 +45,11 @@ volatile byte pulsosVEL = 0; //contador de pulsos para velocidade
 volatile byte pulsosRPM = 0; //contador de pulsos para velocidade
 float RPM = 0; //frequencia de rotacoes em RPM
 float VEL = 0; //velocidade em km/h
+float ACC = 0;
+float DISTANCIA = 0;
 const float RAIO_RODA = 0.266;
 const double PERIMETRO_RODA = 1.72161199;
+
 
 // TEMP
 #include <SparkFunMLX90614.h> // SparkFunMLX90614 Arduino library
